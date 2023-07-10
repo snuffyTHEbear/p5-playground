@@ -5,6 +5,8 @@
   "include": [
     "*.js",
     "**/*.js",
-    "/home/robdaniels3/.vscode/extensions/samplavigne.p5-vscode-1.2.13/p5types/global.d.ts"
+    /**Switching between linux and windows requires switching the extensions directory**/
+    /**"/home/robdaniels3/.vscode/extensions/samplavigne.p5-vscode-1.2.13/p5types/global.d.ts"**/
+    "c:\\Users\\Rob\\.vscode\\extensions\\samplavigne.p5-vscode-1.2.13\\p5types\\global.d.ts"
   ]
 }
