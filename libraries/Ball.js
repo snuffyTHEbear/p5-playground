@@ -1,5 +1,5 @@
 class Ball {
-  constructor() {
+  constructor(w, h) {
     this.radius = random(20, 50);
     this.diameter = this.radius * 0.5;
     this.colour = this.getRandomColour();

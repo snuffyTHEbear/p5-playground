@@ -1,21 +1,15 @@
-let w,h;
-let ball;
+let w = 900;
+let h = 650;
+let centreX = w * 0.5;
+let centreY = h * 0.5;
 
-function setup() {
-  w = 500;
-  h = 500;
-
-  ball = new Ball();
-  console.log(ball);
-
+function setup() 
+{
   createCanvas(w, h);
-  background(255);
+  
 }
 
 function draw() 
 {
   background(255);
-  ball.move();
-  ball.boundsCheck(w, h);
-  ball.display();
 }
