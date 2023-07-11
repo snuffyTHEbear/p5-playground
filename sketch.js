@@ -6,18 +6,20 @@ let centreY = h * 0.5;
  * @type {Ball}
  */
 let b;
+/**
+ * @type {Box}
+ */
+let box;
 
 function setup() 
 {
   createCanvas(w, h);
-  b = new Ball(w, h);
   print(degrees(PI/2));
+  
 }
 
 function draw() 
 {
   background(255);
-  b.display();
-  b.move();
-  b.boundsCheck();
+  
 }
