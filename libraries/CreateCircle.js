@@ -4,12 +4,13 @@ class CreateCircle {
     this.radius = this.diameter * 0.5;
     //this.colour = this.getRandomColour();
     this.colour = c;
-    this.speedX = random(6);
-    this.speedY = random(5);
+    this.speedX = random(-1,1);
+    this.speedY = random(-1,1);
     this.x = random(100, w - 100);
     this.y = random(100, h - 100);
     this.w = w;
     this.h = h;
+    this.dFlag = false;
   }
 
   getRandomColour() {
@@ -20,6 +21,7 @@ class CreateCircle {
   }
 
   display() {
+    
     fill(this.colour);
     noStroke();
     ellipse(this.x, this.y, this.diameter, this.diameter);
@@ -45,5 +47,8 @@ class CreateCircle {
     }
   }
 
-  
+  intersects(other)
+  {
+    return dist(this.x, this.y, other.x, other.y) < this.radius + other.radius;
+  }
 }
