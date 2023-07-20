@@ -4,33 +4,40 @@
 let circle;
 
 /**
- * @type {Walker}
+ * @type {Mover}
  */
-let walker;
+let mover;
 
 let centreX;
 let centreY;
 
 function setup() {
-  createCanvas(400, 400); 
+  createCanvas(400, 400);
   background(0);
   frameRate(60);
 
   centreX = width * 0.5;
   centreY = height * 0.5;
 
-  walker = new Walker(centreX, centreY);
+  mover = new Mover(centreX, centreY);
 }
 
 function draw() {
-  // background(0);
+  background(0);
 
-  translate(centreX, centreY);
+  let pos = createVector(centreX, centreY);
+  let mouse = createVector(mouseX, mouseY);
 
-  let v = p5.Vector.random2D();
-  v.mult(random(50, 100));
+  let v = p5.Vector.sub(mouse, pos);
 
-  strokeWeight(4);
-  stroke(255, 50);
-  line(0,0,v.x,v.y);
+  let m = v.mag();
+  // v.normalize().mult(50);
+  // v.setMag(50);
+
+  mover.update();
+  mover.show();
+  // translate(centreX, centreY);
+  // strokeWeight(4);
+  // stroke(255);
+  // line(0, 0, v.x, v.y);
 }
