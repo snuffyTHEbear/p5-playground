@@ -3,51 +3,34 @@
  */
 let circle;
 
+/**
+ * @type {Walker}
+ */
+let walker;
+
 let centreX;
 let centreY;
 
-
-let inc;
-
 function setup() {
-  createCanvas(200, 200);
+  createCanvas(400, 400); 
   background(0);
-  frameRate(30);
+  frameRate(60);
 
   centreX = width * 0.5;
   centreY = height * 0.5;
+
+  walker = new Walker(centreX, centreY);
 }
 
 function draw() {
   // background(0);
 
-  noFill();
-  stroke(255);
+  translate(centreX, centreY);
 
+  let v = p5.Vector.random2D();
+  v.mult(random(50, 100));
+
+  strokeWeight(4);
+  stroke(255, 50);
+  line(0,0,v.x,v.y);
 }
-
-
-
-// Random walk
-// stroke(255);
-//   strokeWeight(2);
-//   point(x, y);
-
-//   var r = floor(random(4));
-//   switch (r) {
-//     case 0:
-//       x += 1;
-//       break;
-
-//     case 1:
-//       x -= 1;
-//       break;
-
-//     case 2:
-//       y+=1;
-//       break;
-
-//     case 3:
-//       y-=1;
-//       break;
-//   }
