@@ -12,6 +12,13 @@ let prev;
 let colour;
 let diam;
 
+let gravity;
+let wind;
+/**
+ * @type {Mover}
+ */
+let movers;
+
 function setup() {
   createCanvas(400, 400);
   background(220);
@@ -20,56 +27,36 @@ function setup() {
   centreX = width * 0.5;
   centreY = height * 0.5;
 
-  mover = new Mover(centreX, centreY);
+  // mover = new Mover(centreX, centreY);
+  movers = [];
+  for (var i = 0; i < 3; i++) {
+    var m = new Mover(random(50, width - 50), random(50, height - 50));
+    movers.push(m);
+  }
 
   pos = createVector(centreX, centreY);
   prev = pos.copy();
 
   diam = random(10, 20);
   colour = getRandomColour();
+
+  wind = createVector(0.1, 0);
+  gravity = createVector(0, 0.2);
 }
 
 function draw() {
-  //background(0);
+  background(0);
 
-  // let pos = createVector(centreX, centreY);
-  // let mouse = createVector(mouseX, mouseY);
+  movers.forEach((mover) => {
+    if (mouseIsPressed) {
+      mover.applyForce(wind);
+    }
 
-  // let v = p5.Vector.sub(mouse, pos);
-
-  //let m = v.mag();
-  // v.normalize().mult(50);
-  // v.setMag(50);
-
-  stroke(0);
-  strokeWeight(1, 50);
-
-  //line(pos.x, pos.y, prev.x, prev.y);
-
-  prev.set(pos);
-
-  var step = p5.Vector.random2D();
-
-  var r = random(100);
-  if (r < 1) {
-    step.mult(random(25, 100));
-    colour = getRandomColour();
-    diam = random(10, 25);
-  } else {
-    step.setMag(2);
-  }
-
-  pos.add(step);
-  boundsCheck();
-
-  fill(colour);
-  ellipse(pos.x, pos.y, diam, diam);
-  // mover.update();
-  // mover.show();
-  // translate(centreX, centreY);
-  // strokeWeight(4);
-  // stroke(255);
-  // line(0, 0, v.x, v.y);
+    mover.applyForce(p5.Vector.mult(gravity, mover.mass));
+    mover.update();
+    mover.boundsCheck(width, height);
+    mover.show();
+  });
 }
 
 function getRandomColour() {
@@ -78,19 +65,4 @@ function getRandomColour() {
   var b = random(0, 255);
   var a = 125;
   return color(r, g, b, a);
-}
-
-function boundsCheck() {
-  if (pos.x >= width - diam) {
-    pos.x = diam;
-  }
-  if (pos.x <= -diam) {
-    pos.x = width - diam;
-  }
-  if (pos.y >= height - diam) {
-    pos.y = diam;
-  }
-  if (pos.y < -diam) {
-    pos.y = height - diam;
-  }
 }
