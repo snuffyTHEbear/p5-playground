@@ -1,5 +1,8 @@
 class Mover {
-  constructor(x, y) {
+  constructor(x, y, w, h) {
+    this.w = w;
+    this.h = h;
+    this.mu = 0.1;
     this.colour = this.getRandomColour();
     this.mass = random(1.2, 5);
     this.radius = sqrt(this.mass) * 5;
@@ -30,9 +33,24 @@ class Mover {
   show() {
     stroke(this.colour, 100);
     strokeWeight(2);
-    noFill();
+    fill(this.colour);
     //point(this.pos.x, this.pos.y);
     ellipse(this.position.x, this.position.y, this.diameter);
+  }
+
+  friction() {
+    let diff = this.h - (this.position.y + this.radius);
+    if (diff < 1) {
+      //this.velocity.mult(0.95);
+      //Direction of friction
+      let friction = this.velocity.copy();
+      friction.normalize();
+      friction.mult(-1);
+      //Magnitude of friction
+      let normal = this.mass;
+      friction.setMag(this.mu * normal);
+      this.applyForce(friction);
+    }
   }
 
   applyForce(force) {

@@ -30,7 +30,12 @@ function setup() {
   // mover = new Mover(centreX, centreY);
   movers = [];
   for (var i = 0; i < 3; i++) {
-    var m = new Mover(random(50, width - 50), random(50, height - 50));
+    var m = new Mover(
+      random(50, width - 50),
+      random(50, height - 50),
+      width,
+      height
+    );
     movers.push(m);
   }
 
@@ -47,16 +52,17 @@ function setup() {
 function draw() {
   background(0);
 
-  movers.forEach((mover) => {
+  for (let mover of movers) {
     if (mouseIsPressed) {
       mover.applyForce(wind);
     }
 
     mover.applyForce(p5.Vector.mult(gravity, mover.mass));
+    mover.friction();
     mover.update();
     mover.boundsCheck(width, height);
     mover.show();
-  });
+  }
 }
 
 function getRandomColour() {
