@@ -1,15 +1,12 @@
 class Mover {
-  constructor(x, y, w, h) {
-    this.w = w;
-    this.h = h;
+  constructor(x, y, vx, vy, m) {
     this.mu = 0.1;
-    this.colour = this.getRandomColour();
-    this.mass = random(1.2, 5);
-    this.radius = sqrt(this.mass) * 5;
+    this.colour = 0;
+    this.mass = m;
+    this.radius = sqrt(this.mass) * 2;
     this.diameter = this.radius * 2;
     this.position = createVector(x, y);
-    this.previous = this.position.copy();
-    this.velocity = createVector(0, 0);
+    this.velocity = createVector(vx, vy);
     this.acceleration = createVector(0, 0);
   }
 
@@ -30,12 +27,13 @@ class Mover {
     this.acceleration.set(0, 0);
   }
 
-  show() {
-    stroke(this.colour, 100);
-    strokeWeight(2);
-    fill(this.colour);
+  show(drawFill = true) {
+    // stroke(255, 0, 100);
+    // strokeWeight(2);
+
+    drawFill ? fill(this.colour) : noFill();
     //point(this.pos.x, this.pos.y);
-    ellipse(this.position.x, this.position.y, this.diameter);
+    //ellipse(this.position.x, this.position.y, this.diameter);
   }
 
   friction() {
@@ -57,6 +55,16 @@ class Mover {
     let f = p5.Vector.div(force, this.mass);
 
     this.acceleration.add(f);
+  }
+
+  attract(mover) {
+    let force = p5.Vector.sub(this.position, mover.position);
+    let distanceSq = constrain(force.magSq(), 100, 1000);
+    let G = 0.2;
+    let strength = (G * (this.mass * mover.mass)) / distanceSq;
+
+    force.setMag(strength);
+    mover.applyForce(force);
   }
 
   boundsCheck(w, h) {
